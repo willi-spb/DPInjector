@@ -115,3 +115,13 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Willi
+Win32/
+*.vlb
+.svn/
+.svn-base
+.svn/entries
+*.db
+.svn/format
+*.db-journal
