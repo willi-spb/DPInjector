@@ -1,9 +1,9 @@
 object DPForm: TDPForm
   Left = 0
   Top = 0
-  Caption = 'DPForm'
+  Caption = 'DPForm - Delphi project Injector - v1.0'
   ClientHeight = 570
-  ClientWidth = 1024
+  ClientWidth = 1066
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,188 +14,305 @@ object DPForm: TDPForm
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object spl1: TSplitter
-    Left = 0
-    Top = 429
-    Width = 1024
-    Height = 3
-    Cursor = crVSplit
-    Align = alBottom
-    ExplicitTop = 42
-    ExplicitWidth = 390
-  end
-  object DBGrid1: TDBGrid
-    Left = 0
-    Top = 50
-    Width = 1024
-    Height = 379
-    Align = alClient
-    DataSource = DST
-    TabOrder = 0
-    TitleFont.Charset = DEFAULT_CHARSET
-    TitleFont.Color = clWindowText
-    TitleFont.Height = -11
-    TitleFont.Name = 'Tahoma'
-    TitleFont.Style = []
-    Columns = <
-      item
-        Expanded = False
-        FieldName = 'ID'
-        Width = 40
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'RCODE'
-        Width = 50
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'FILENAME'
-        Width = 360
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'TAGNAME'
-        Width = 90
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'INTEXT'
-        Width = 220
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'ADD_INFO'
-        Width = 180
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'SIGN'
-        Width = 40
-        Visible = True
-      end>
-  end
-  object pnlBottom: TPanel
-    Left = 0
-    Top = 432
-    Width = 1024
-    Height = 138
-    Align = alBottom
-    Caption = 'pnlBottom'
-    ShowCaption = False
-    TabOrder = 1
-    ExplicitWidth = 1000
-    DesignSize = (
-      1024
-      138)
-    object btnAPP: TSpeedButton
-      Left = 739
-      Top = 4
-      Width = 23
-      Height = 22
-      Action = actApplyInText
-      Anchors = [akTop, akRight]
-      Caption = '>!'
-      ExplicitLeft = 715
-    end
-    object VLEditor1: TValueListEditor
-      Left = 778
-      Top = 1
-      Width = 245
-      Height = 136
-      Align = alRight
-      ScrollBars = ssVertical
-      Strings.Strings = (
-        '1=Directory project'
-        '4=add to Interface uses'
-        '8=add to Implementation uses'
-        '16=add to DPR (in)'
-        '32=tag (from TagName) replace')
-      TabOrder = 0
-      TitleCaptions.Strings = (
-        'Code'
-        'Description')
-      ExplicitLeft = 754
-      ColWidths = (
-        55
-        184)
-      RowHeights = (
-        18
-        18
-        18
-        18
-        18
-        18)
-    end
-    object MemoIn: TMemo
-      AlignWithMargins = True
-      Left = 4
-      Top = 4
-      Width = 730
-      Height = 130
-      Margins.Right = 44
-      Align = alClient
-      ScrollBars = ssVertical
-      TabOrder = 1
-      ExplicitWidth = 706
-    end
-  end
-  object pnlTop_A: TPanel
+  object pgCtrl: TPageControl
     Left = 0
     Top = 0
-    Width = 1024
-    Height = 50
-    Align = alTop
-    Caption = 'pnlTop_A'
-    ShowCaption = False
-    TabOrder = 2
-    object ActionToolBar2: TActionToolBar
-      AlignWithMargins = True
-      Left = 1
-      Top = 1
-      Width = 802
-      Height = 42
-      Margins.Left = 0
-      Margins.Top = 0
-      Margins.Right = 220
-      Margins.Bottom = 0
-      ActionManager = ActionManager1
-      Caption = 'ActionToolBar2'
-      Color = clMenuBar
-      ColorMap.DisabledFontColor = 7171437
-      ColorMap.HighlightColor = clWhite
-      ColorMap.BtnSelectedFont = clBlack
-      ColorMap.UnusedColor = clWhite
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clBlack
-      Font.Height = -11
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ParentFont = False
-      Spacing = 0
-      ExplicitWidth = 998
+    Width = 1066
+    Height = 570
+    ActivePage = tsComment
+    Align = alClient
+    TabOrder = 0
+    TabPosition = tpBottom
+    object tsDirect: TTabSheet
+      Caption = 'Direct'
+      ExplicitWidth = 969
+      ExplicitHeight = 486
+      object spl1: TSplitter
+        Left = 0
+        Top = 541
+        Width = 1058
+        Height = 3
+        Cursor = crVSplit
+        Align = alBottom
+        ExplicitTop = 42
+        ExplicitWidth = 390
+      end
+      object dbchkACTIVE: TDBCheckBox
+        Left = 272
+        Top = 224
+        Width = 97
+        Height = 17
+        DataField = 'ACTIVE'
+        DataSource = DST
+        ParentColor = False
+        TabOrder = 0
+        Visible = False
+        StyleElements = [seFont]
+        OnClick = dbchkACTIVEClick
+      end
+      object DBGrid1: TDBGrid
+        Left = 0
+        Top = 50
+        Width = 1058
+        Height = 353
+        Align = alClient
+        DataSource = DST
+        TabOrder = 1
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -11
+        TitleFont.Name = 'Tahoma'
+        TitleFont.Style = []
+        OnColExit = DBGrid1ColExit
+        OnDrawColumnCell = DBGrid1DrawColumnCell
+        OnKeyPress = DBGrid1KeyPress
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'ID'
+            Width = 40
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'ACTIVE'
+            Title.Caption = 'ACT'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'RCODE'
+            Width = 50
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'FILENAME'
+            Width = 360
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'TAGNAME'
+            Width = 90
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'INTEXT'
+            Width = 220
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'ADD_INFO'
+            Width = 180
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'SIGN'
+            Width = 40
+            Visible = True
+          end>
+      end
+      object pnlBottom: TPanel
+        Left = 0
+        Top = 403
+        Width = 1058
+        Height = 138
+        Align = alBottom
+        Caption = 'pnlBottom'
+        ShowCaption = False
+        TabOrder = 2
+        ExplicitTop = 432
+        ExplicitWidth = 1066
+        DesignSize = (
+          1058
+          138)
+        object btnAPP: TSpeedButton
+          Left = 773
+          Top = 4
+          Width = 23
+          Height = 22
+          Action = actApplyInText
+          Anchors = [akTop, akRight]
+          Caption = '>!'
+          ExplicitLeft = 715
+        end
+        object VLEditor1: TValueListEditor
+          Left = 812
+          Top = 1
+          Width = 245
+          Height = 136
+          Align = alRight
+          ScrollBars = ssVertical
+          Strings.Strings = (
+            '1=Directory project'
+            '4=add to Interface uses'
+            '8=add to Implementation uses'
+            '16=add to DPR (in)'
+            '32=tag (from TagName) replace')
+          TabOrder = 0
+          TitleCaptions.Strings = (
+            'Code'
+            'Description')
+          ExplicitLeft = 820
+          ColWidths = (
+            55
+            184)
+          RowHeights = (
+            18
+            18
+            18
+            18
+            18
+            18)
+        end
+        object MemoIn: TMemo
+          AlignWithMargins = True
+          Left = 4
+          Top = 4
+          Width = 764
+          Height = 130
+          Margins.Right = 44
+          Align = alClient
+          ScrollBars = ssVertical
+          TabOrder = 1
+          ExplicitWidth = 772
+        end
+      end
+      object pnlTop_A: TPanel
+        Left = 0
+        Top = 0
+        Width = 1058
+        Height = 50
+        Align = alTop
+        Caption = 'pnlTop_A'
+        ShowCaption = False
+        TabOrder = 3
+        ExplicitWidth = 1066
+        object ActionToolBar2: TActionToolBar
+          AlignWithMargins = True
+          Left = 1
+          Top = 1
+          Width = 836
+          Height = 42
+          Margins.Left = 0
+          Margins.Top = 0
+          Margins.Right = 220
+          Margins.Bottom = 0
+          ActionManager = ActionManager1
+          Caption = 'ActionToolBar2'
+          Color = clMenuBar
+          ColorMap.DisabledFontColor = 7171437
+          ColorMap.HighlightColor = clWhite
+          ColorMap.BtnSelectedFont = clBlack
+          ColorMap.UnusedColor = clWhite
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          Spacing = 0
+          ExplicitWidth = 844
+        end
+        object chk_AddTagText: TCheckBox
+          Left = 840
+          Top = 6
+          Width = 145
+          Height = 13
+          Caption = 'Add default tag Comment'
+          TabOrder = 1
+        end
+        object edt_TagComment: TEdit
+          Left = 840
+          Top = 23
+          Width = 121
+          Height = 21
+          TabOrder = 2
+          Text = '///dpAutoCode'
+        end
+      end
     end
-    object chk_AddTagText: TCheckBox
-      Left = 840
-      Top = 6
-      Width = 145
-      Height = 13
-      Caption = 'Add default tag Comment'
-      TabOrder = 1
-    end
-    object edt_TagComment: TEdit
-      Left = 840
-      Top = 23
-      Width = 121
-      Height = 21
-      TabOrder = 2
-      Text = '///  dpAutoCode'
+    object tsComment: TTabSheet
+      Caption = 'Info and Comment'
+      ImageIndex = 1
+      object mmoComment: TMemo
+        Left = 0
+        Top = 0
+        Width = 1058
+        Height = 544
+        Align = alClient
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        Lines.Strings = (
+          #1053#1072#1079#1085#1072#1095#1077#1085#1080#1077' '#1087#1088#1086#1075#1088#1072#1084#1084#1099':'
+          
+            ' '#1040#1074#1090#1086#1084#1072#1090#1080#1095#1077#1089#1082#1086#1077' '#1076#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1082' '#1087#1088#1086#1077#1082#1090#1091' '#1089#1074#1086#1080#1093' '#1084#1086#1076#1091#1083#1077#1081' '#1080' '#1079#1072#1084#1077#1085#1072' '#1085#1072#1087#1086 +
+            #1083#1085#1077#1085#1080#1103' '#1084#1077#1090#1086#1076#1086#1074' '#1074#1099#1079#1086#1074#1072' '#1074' '#1084#1086#1076#1091#1083#1103#1093' '#1087#1088#1086#1077#1082#1090#1072'.'
+          ' '
+          
+            ' 1. '#1044#1086#1083#1078#1085#1072' '#1073#1099#1090#1100' '#1072#1082#1090#1080#1074#1085#1072' '#1093#1086#1090#1103' '#1073#1099' '#1086#1076#1085#1072' '#1079#1072#1087#1080#1089#1100' '#1089' RCode=1 - '#1101#1090#1086' '#1072#1082#1090#1080 +
+            #1074#1085#1099#1081' '#1087#1091#1090#1100' '#1082' '#1082#1072#1090#1072#1083#1086#1075#1091' '#1087#1088#1086#1077#1082#1090#1072
+          ' '
+          
+            ' 2. '#1054#1087#1080#1089#1072#1085#1080#1077' '#1076#1083#1103' RCode - '#1089#1084'. '#1074' '#1090#1072#1073#1083#1080#1095#1082#1077' '#1089#1086#1086#1090#1074#1077#1090#1089#1090#1074#1080#1103' - '#1076#1083#1103' '#1086#1087#1088#1077#1076 +
+            #1077#1083#1077#1085#1085#1086#1075#1086' '#1082#1086#1076#1072' '#1079#1072#1076#1072#1085#1072' '#1087#1088#1086#1075#1088#1072#1084#1084#1085#1086' '#1089#1074#1086#1103' '#1088#1077#1072#1082#1094#1080#1103' ('#1074#1086#1079#1084#1086#1078#1085#1086' '#1088#1072#1089#1096#1080#1088#1077#1085#1080 +
+            #1077')'
+          ' '
+          
+            ' 3. '#1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1084#1086#1076#1091#1083#1103' '#1074' uses - '#1091#1082#1072#1079#1072#1090#1100' '#1080#1084#1103' '#1084#1086#1076#1091#1083#1103' ('#1073#1077#1079' '#1088#1072#1089#1096#1080#1088#1077#1085#1080 +
+            #1103')'
+          ' 4. '#1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1084#1086#1076#1091#1083#1103' '#1082' DPR - '#1087#1086#1076#1082#1083#1102#1095#1072#1077#1090' '#1077#1075#1086' '#1074' uses  *.dpr'
+          
+            ' 5. '#1054#1073#1103#1079#1072#1090#1077#1083#1100#1085#1086' '#1076#1083#1103' 4 '#1090#1072#1082#1078#1077' '#1076#1086#1073#1072#1074#1080#1090#1100' '#1092#1086#1088#1084#1091' '#1074' xml-'#1085#1072#1089#1090#1088#1086#1081#1082#1080' '#1087#1088#1086#1077#1082 +
+            #1090#1072' - '#1092#1072#1081#1083' *.dproj - '#1074' '#1085#1077#1084' '#1089#1083#1077#1076#1091#1102#1097#1080#1077' '#1087#1077#1088#1077#1084#1077#1085#1085#1099#1077' '#1074' '#1089#1087#1080#1089#1082#1077' '#1089' '#1088#1072#1079#1076#1077#1083 +
+            #1080#1090#1077#1083#1077#1084' <;>'
+          '    FILE=<'#1080#1084#1103' '#1076#1086#1073#1072#1074#1083#1103#1077#1084#1086#1075#1086' '#1092#1072#1081#1083#1072' '#1089' '#1087#1091#1090#1077#1084' '#1082' '#1085#1077#1084#1091' '#1080' '#1089' '#1088#1072#1089#1096#1080#1088#1077#1085#1080#1077#1084'>'
+          '    FORM=<'#1080#1084#1103' '#1092#1086#1088#1084#1099', '#1076#1086#1073#1072#1074#1083#1103#1077#1084#1086#1081' '#1074' '#1087#1088#1086#1077#1082#1090'>'#9
+          #9'FORM_TYPE=dfm - '#1090#1080#1087' '#1092#1086#1088#1084#1099' ('#1087#1086' '#1091#1084#1086#1083#1095#1072#1085#1080#1102' dfm)'
+          
+            ' 6. '#1044#1083#1103' Tag - '#1079#1072#1084#1077#1085#1072' '#1095#1072#1089#1090#1080' '#1082#1086#1076#1072' '#1085#1072' '#1090#1086', '#1095#1090#1086' '#1074' '#1089#1090#1088#1086#1082#1077' INTEXT '#1089#1083#1077#1076#1091 +
+            #1102#1097#1080#1077' '#1086#1089#1086#1073#1077#1085#1085#1086#1089#1090#1080':'
+          '    SELF - '#1079#1072#1084#1077#1085#1072' '#1101#1090#1086#1075#1086' '#1080#1076#1077#1085#1090#1080#1092#1080#1082#1072#1090#1086#1088#1072' '#1085#1072' '#1079#1085#1072#1095#1077#1085#1080#1077' TagName '
+          
+            #9'DEL_LINES=<n>  '#1077#1089#1083#1080' n>0 - '#1091#1076#1072#1083#1080#1090#1100' '#1079#1072#1076#1072#1085#1085#1086#1077' '#1082#1086#1083'-'#1074#1086' '#1089#1090#1088#1086#1095#1077#1082' '#1087#1077#1088#1077#1076 +
+            ' '#1074#1089#1090#1072#1074#1082#1086#1081' '#1090#1077#1082#1089#1090#1072' '#1079#1072#1084#1077#1085#1099
+          
+            #9'        n=-1 - '#1091#1076#1072#1083#1080#1090#1100' '#1074#1089#1077' '#1089#1090#1088#1086#1095#1082#1080' '#1076#1086' '#1089#1086#1095#1077#1090#1072#1085#1080#1103' Line(j)->  <end' +
+            ';>  '#1079#1072' '#1085#1080#1084' Line(j+1) -> '#1087#1091#1089#1090#1072#1103' '#1089#1090#1088#1086#1082#1072' '#1080#1083#1080' <end.>'
+          
+            #9#1047#1072#1084#1077#1085#1103#1077#1090#1089#1103' '#1090#1072#1075' '#1085#1072' '#1090#1077#1082#1089#1090' '#1089#1084' '#1074' '#1085#1080#1078#1085#1077#1081' '#1095#1072#1089#1090#1080' '#1086#1082#1085#1072' - '#1088#1072#1079#1076#1077#1083#1080#1090#1077#1083#1100' '#1083#1080 +
+            #1085#1080#1081' - '#1089#1080#1084#1074#1086#1083':  | '#9#9
+          #9#1044#1083#1103' '#1079#1072#1084#1077#1085#1099' '#1080#1089#1087#1086#1083#1100#1079#1091#1081#1090#1077' '#1082#1085#1086#1087#1082#1091'  >!'
+          
+            ' 7. '#1045#1089#1083#1080' '#1074#1082#1083#1102#1095#1080#1090#1100' Add default tag Comment - '#1090#1086' '#1082#1086#1084#1084#1077#1085#1090#1072#1088#1080#1081' '#1089#1090#1088#1086#1082 +
+            #1080' '#1073#1091#1076#1077#1090' '#1076#1086#1073#1072#1074#1083#1103#1090#1100#1089#1103' '#1076#1083#1103' '#1082#1072#1078#1076#1086#1075#1086'! '#1079#1072#1084#1077#1085#1103#1077#1084#1086#1075#1086' '#1090#1077#1075#1072' (6) '#1087#1077#1088#1077#1076' '#1085#1080#1084'.'
+          '    ('#1080#1089#1087#1086#1083#1100#1079#1086#1074#1072#1090#1100' '#1076#1083#1103' '#1087#1086#1080#1089#1082#1072' '#1079#1072#1090#1077#1084' '#1079#1072#1084#1077#1085' '#1074' pas-'#1092#1072#1081#1083#1072#1093')'
+          #9
+          
+            #9#1058#1072#1082#1080#1084' '#1086#1073#1088#1072#1079#1086#1084', '#1084#1086#1078#1085#1086' '#1076#1086#1073#1072#1074#1080#1090#1100' '#1082' '#1087#1088#1086#1077#1082#1090#1091' '#1092#1072#1081#1083' '#1089' '#1092#1086#1088#1084#1086#1081', '#1079#1072#1088#1077#1075#1080#1089#1090 +
+            #1088#1080#1088#1086#1074#1072#1090#1100' '#1077#1105' '#1074' '#1085#1072#1089#1090#1088#1086#1081#1082#1072#1093', '#1076#1086#1073#1072#1074#1080#1090#1100' '#1074' uses '#1085#1091#1078#1085#1099#1093' '#1084#1086#1076#1091#1083#1077#1081','
+          '    '#1079#1072#1084#1077#1085#1080#1090#1100' '#1074#1099#1079#1086#1074' '#1079#1072#1075#1083#1091#1096#1077#1082' '#1085#1072' '#1089#1074#1086#1081' '#1089#1082#1088#1080#1087#1090' '#1080#1079' tag-'#1087#1086#1083#1103'. '
+          
+            #9#1069#1090#1086' '#1087#1086#1079#1074#1086#1083#1103#1077#1090' '#1093#1088#1072#1085#1080#1090#1100' '#1080#1079#1084#1077#1085#1077#1085#1080#1103' '#1086#1090#1076#1077#1083#1100#1085#1086' '#1086#1090' '#1091#1078#1077' '#1080#1084#1077#1102#1097#1080#1093#1089#1103' '#1092#1072#1081#1083#1086 +
+            #1074' '#1087#1088#1086#1077#1082#1090#1072' ('#1085#1072#1087#1088#1080#1084#1077#1088', '#1074#1079#1103#1090#1099#1093' '#1080#1079' '#1088#1077#1087#1086#1079#1080#1090#1086#1088#1080#1103'), '#1085#1077' '#1074#1085#1086#1089#1103' '#1053#1048#1050#1040#1050#1048#1061' '#1080#1079 +
+            #1084#1077#1085#1077#1085#1080#1081' '#1074' '#1089#1072#1084' '
+          #1088#1072#1087#1086#1079#1080#1090#1086#1088#1080#1081
+          #9)
+        ParentFont = False
+        ReadOnly = True
+        TabOrder = 0
+        ExplicitLeft = 3
+        ExplicitTop = 3
+        ExplicitWidth = 726
+        ExplicitHeight = 502
+      end
     end
   end
   object FDMemT: TFDMemTable
@@ -206,6 +323,11 @@ object DPForm: TDPForm
         Name = 'ID'
         Attributes = [faRequired]
         DataType = ftInteger
+      end
+      item
+        Name = 'ACTIVE'
+        Attributes = [faRequired]
+        DataType = ftBoolean
       end
       item
         Name = 'RCODE'
@@ -249,6 +371,11 @@ object DPForm: TDPForm
     Top = 104
     object FDMemTID: TIntegerField
       FieldName = 'ID'
+      Required = True
+    end
+    object FDMemTACTIVE: TBooleanField
+      AutoGenerateValue = arDefault
+      FieldName = 'ACTIVE'
       Required = True
     end
     object FDMemTRCODE: TIntegerField
@@ -890,8 +1017,8 @@ object DPForm: TDPForm
     object FileOpen1: TFileOpen
       Category = 'File'
       Caption = '&Open...'
-      Dialog.DefaultExt = 'dat'
-      Dialog.Filter = 'Script data files (*.dat)|*.dat|All data Files (*.*)|*.*'
+      Dialog.DefaultExt = 'dsd'
+      Dialog.Filter = 'Replaced script files (*.sdr)|*.dsd|All data Files (*.*)|*.*'
       Dialog.FilterIndex = 0
       Hint = 'Open|Opens an existing file'
       ImageIndex = 0
@@ -901,8 +1028,8 @@ object DPForm: TDPForm
     object FileSaveAs1: TFileSaveAs
       Category = 'File'
       Caption = 'Save &As...'
-      Dialog.DefaultExt = 'dat'
-      Dialog.Filter = 'Script data files (*.dat)|*.dat|All data Files (*.*)|*.*'
+      Dialog.DefaultExt = 'dsd'
+      Dialog.Filter = 'Replaced script files (*.sdr)|*.dsd|All data Files (*.*)|*.*'
       Dialog.FilterIndex = 0
       Hint = 'Save As|Saves the active file with a new name'
       ImageIndex = 1

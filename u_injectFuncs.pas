@@ -175,6 +175,7 @@ begin
  LReplList:=TStringList.Create;
  try
    LReplList.Delimiter:=';';
+   LReplList.StrictDelimiter:=True;
    LReplList.DelimitedText:=AInfo;
    LLIst.LoadFromFile(AFName);
    LFlag:=false;
@@ -237,7 +238,7 @@ end;
 
 function TInjectActions.ReplaceTag(const AFName,ATag,ARText:String;DeliChar:Char='|'):boolean;
 var LLIst,LReplList:TStringList;
-    LS,Ltag,LText:String;
+    LS,LSS,LSS2,Ltag,LText:String;
     i,j,k:integer;
     LFlag:boolean;
     L_SelfAddFlag:boolean;
@@ -252,6 +253,7 @@ begin
  LReplList:=TStringList.Create;
  try
    LReplList.Delimiter:=DeliChar;
+   LReplList.StrictDelimiter:=True;
    LReplList.DelimitedText:=ARText;
    ///  Add Self Tag information  - replace SELF to aTag String
    i:=LReplList.IndexOf('SELF');
@@ -276,10 +278,27 @@ begin
       if LS=Ltag then
         begin
          // LList.Strings[i]:='';
+           if L_ReplDeleteCount=-1 then
+               begin /// Delete lines to next SignLines
+                 j:=i;
+                 while j<LList.Count-1 do
+                   begin
+                     LSS:=Lowercase(Trim(LList.Strings[j]));
+                     LSS2:=Lowercase(Trim(LList.Strings[j+1]));
+                     if (Pos('end;',LSS)=1) and ((LSS2='') or (Pos('end.',LSS2)=1)) then
+                      begin
+                        L_ReplDeleteCount:=j-i+1;
+                        break; // !
+                      end;
+                     Inc(j);
+                   end;
+               end;
           /// delete setting lines
           if L_ReplDeleteCount>0 then
+           begin
              for k:=1 to L_ReplDeleteCount do
                  LLIst.Delete(i);
+           end;
           ///
           j:=LReplList.Count-1;
           while J>=0 do
