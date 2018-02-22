@@ -37,6 +37,9 @@ type
     spl1: TSplitter;
     btnAPP: TSpeedButton;
     actApplyInText: TAction;
+    pnlTop_A: TPanel;
+    chk_AddTagText: TCheckBox;
+    edt_TagComment: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure FileSaveAs1Accept(Sender: TObject);
     procedure FileOpen1Accept(Sender: TObject);
@@ -83,7 +86,7 @@ end;
 procedure TDPForm.actRenameGroupExecute(Sender: TObject);
 var LAct: TInjectActions;
     LCode:integer;
-    LDir:string;
+    LDir,LTagReplText:string;
 begin
    LDir:='';
    LAct:=TInjectActions.Create(0);
@@ -104,9 +107,15 @@ begin
                                  FieldByName('INTEXT').AsWideString,false);
           16: Lact.AddToProject(LDir+FieldByName('FILENAME').AsWideString,
                                  FieldByName('INTEXT').AsWideString,true); // true!
-          32: Lact.ReplaceTag(LDir+FieldByName('FILENAME').AsWideString,
-                              FieldByName('TAGNAME').AsWideString,
-                                 FieldByName('INTEXT').AsWideString);
+          32: begin
+                LTagReplText:=FieldByName('INTEXT').AsWideString;
+                if chk_AddTagText.Checked=true then
+                   LTagReplText:=edt_TagComment.Text+'|'+LTagReplText;
+                ///
+                Lact.ReplaceTag(LDir+FieldByName('FILENAME').AsWideString,
+                                 FieldByName('TAGNAME').AsWideString,
+                                 LTagReplText);
+              end;
           33: Lact.InsertProjFormData(LDir+FieldByName('FILENAME').AsWideString,
                                       FieldByName('INTEXT').AsWideString);
          end;

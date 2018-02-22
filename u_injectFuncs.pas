@@ -253,10 +253,13 @@ begin
  try
    LReplList.Delimiter:=DeliChar;
    LReplList.DelimitedText:=ARText;
-   ///  Add Self Tag information
-   L_SelfAddFlag:=LReplList.IndexOf('SELF')=0;
-   if L_SelfAddFlag then
-      LReplList.Strings[0]:=ATag;
+   ///  Add Self Tag information  - replace SELF to aTag String
+   i:=LReplList.IndexOf('SELF');
+   if i>=0 then
+    begin
+      L_SelfAddFlag:=true;
+      LReplList.Strings[i]:=ATag;
+    end;
    ///
    i:=LReplList.IndexOfName('DEL_LINES');
    if i>=0 then

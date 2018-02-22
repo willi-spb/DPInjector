@@ -3,7 +3,7 @@ object DPForm: TDPForm
   Top = 0
   Caption = 'DPForm'
   ClientHeight = 570
-  ClientWidth = 1000
+  ClientWidth = 1024
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object DPForm: TDPForm
   object spl1: TSplitter
     Left = 0
     Top = 429
-    Width = 1000
+    Width = 1024
     Height = 3
     Cursor = crVSplit
     Align = alBottom
@@ -26,9 +26,9 @@ object DPForm: TDPForm
   end
   object DBGrid1: TDBGrid
     Left = 0
-    Top = 42
-    Width = 1000
-    Height = 387
+    Top = 50
+    Width = 1024
+    Height = 379
     Align = alClient
     DataSource = DST
     TabOrder = 0
@@ -81,49 +81,31 @@ object DPForm: TDPForm
         Visible = True
       end>
   end
-  object ActionToolBar2: TActionToolBar
-    Left = 0
-    Top = 0
-    Width = 1000
-    Height = 42
-    ActionManager = ActionManager1
-    Caption = 'ActionToolBar2'
-    Color = clMenuBar
-    ColorMap.DisabledFontColor = 7171437
-    ColorMap.HighlightColor = clWhite
-    ColorMap.BtnSelectedFont = clBlack
-    ColorMap.UnusedColor = clWhite
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    Spacing = 0
-  end
   object pnlBottom: TPanel
     Left = 0
     Top = 432
-    Width = 1000
+    Width = 1024
     Height = 138
     Align = alBottom
     Caption = 'pnlBottom'
     ShowCaption = False
-    TabOrder = 2
+    TabOrder = 1
+    ExplicitWidth = 1000
     DesignSize = (
-      1000
+      1024
       138)
     object btnAPP: TSpeedButton
-      Left = 715
+      Left = 739
       Top = 4
       Width = 23
       Height = 22
       Action = actApplyInText
       Anchors = [akTop, akRight]
       Caption = '>!'
+      ExplicitLeft = 715
     end
     object VLEditor1: TValueListEditor
-      Left = 754
+      Left = 778
       Top = 1
       Width = 245
       Height = 136
@@ -139,6 +121,7 @@ object DPForm: TDPForm
       TitleCaptions.Strings = (
         'Code'
         'Description')
+      ExplicitLeft = 754
       ColWidths = (
         55
         184)
@@ -154,12 +137,65 @@ object DPForm: TDPForm
       AlignWithMargins = True
       Left = 4
       Top = 4
-      Width = 706
+      Width = 730
       Height = 130
       Margins.Right = 44
       Align = alClient
       ScrollBars = ssVertical
       TabOrder = 1
+      ExplicitWidth = 706
+    end
+  end
+  object pnlTop_A: TPanel
+    Left = 0
+    Top = 0
+    Width = 1024
+    Height = 50
+    Align = alTop
+    Caption = 'pnlTop_A'
+    ShowCaption = False
+    TabOrder = 2
+    object ActionToolBar2: TActionToolBar
+      AlignWithMargins = True
+      Left = 1
+      Top = 1
+      Width = 802
+      Height = 42
+      Margins.Left = 0
+      Margins.Top = 0
+      Margins.Right = 220
+      Margins.Bottom = 0
+      ActionManager = ActionManager1
+      Caption = 'ActionToolBar2'
+      Color = clMenuBar
+      ColorMap.DisabledFontColor = 7171437
+      ColorMap.HighlightColor = clWhite
+      ColorMap.BtnSelectedFont = clBlack
+      ColorMap.UnusedColor = clWhite
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      Spacing = 0
+      ExplicitWidth = 998
+    end
+    object chk_AddTagText: TCheckBox
+      Left = 840
+      Top = 6
+      Width = 145
+      Height = 13
+      Caption = 'Add default tag Comment'
+      TabOrder = 1
+    end
+    object edt_TagComment: TEdit
+      Left = 840
+      Top = 23
+      Width = 121
+      Height = 21
+      TabOrder = 2
+      Text = '///  dpAutoCode'
     end
   end
   object FDMemT: TFDMemTable
@@ -249,7 +285,7 @@ object DPForm: TDPForm
     Left = 392
     Top = 96
     Bitmap = {
-      494C010103001400580020002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101030014005C0020002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000800000002000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
