@@ -19,14 +19,12 @@ object DPForm: TDPForm
     Top = 0
     Width = 1066
     Height = 570
-    ActivePage = tsComment
+    ActivePage = tsDirect
     Align = alClient
     TabOrder = 0
     TabPosition = tpBottom
     object tsDirect: TTabSheet
       Caption = 'Direct'
-      ExplicitWidth = 969
-      ExplicitHeight = 486
       object spl1: TSplitter
         Left = 0
         Top = 541
@@ -42,6 +40,7 @@ object DPForm: TDPForm
         Top = 224
         Width = 97
         Height = 17
+        Color = clBtnFace
         DataField = 'ACTIVE'
         DataSource = DST
         ParentColor = False
@@ -125,8 +124,6 @@ object DPForm: TDPForm
         Caption = 'pnlBottom'
         ShowCaption = False
         TabOrder = 2
-        ExplicitTop = 432
-        ExplicitWidth = 1066
         DesignSize = (
           1058
           138)
@@ -157,7 +154,6 @@ object DPForm: TDPForm
           TitleCaptions.Strings = (
             'Code'
             'Description')
-          ExplicitLeft = 820
           ColWidths = (
             55
             184)
@@ -179,7 +175,6 @@ object DPForm: TDPForm
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 1
-          ExplicitWidth = 772
         end
       end
       object pnlTop_A: TPanel
@@ -191,7 +186,6 @@ object DPForm: TDPForm
         Caption = 'pnlTop_A'
         ShowCaption = False
         TabOrder = 3
-        ExplicitWidth = 1066
         object ActionToolBar2: TActionToolBar
           AlignWithMargins = True
           Left = 1
@@ -216,7 +210,6 @@ object DPForm: TDPForm
           Font.Style = []
           ParentFont = False
           Spacing = 0
-          ExplicitWidth = 844
         end
         object chk_AddTagText: TCheckBox
           Left = 840
@@ -308,10 +301,6 @@ object DPForm: TDPForm
         ParentFont = False
         ReadOnly = True
         TabOrder = 0
-        ExplicitLeft = 3
-        ExplicitTop = 3
-        ExplicitWidth = 726
-        ExplicitHeight = 502
       end
     end
   end
@@ -374,7 +363,6 @@ object DPForm: TDPForm
       Required = True
     end
     object FDMemTACTIVE: TBooleanField
-      AutoGenerateValue = arDefault
       FieldName = 'ACTIVE'
       Required = True
     end
@@ -412,7 +400,7 @@ object DPForm: TDPForm
     Left = 392
     Top = 96
     Bitmap = {
-      494C0101030014005C0020002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010103001400600020002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000800000002000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

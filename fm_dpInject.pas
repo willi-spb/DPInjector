@@ -193,6 +193,7 @@ begin
         dbchkACTIVE.Width := Rect.Right - Rect.Left;
         dbchkACTIVE.Height := Rect.Bottom - Rect.Top;
        dbchkACTIVE.Visible := True;
+       dbchkACTIVE.BringToFront;
      end
   end
  else
