@@ -16,7 +16,7 @@ type
     ///
     procedure Clearparams;
     ///
-    function AddToProject(const AFName,ARText:String; inIncludeOpt:boolean=false):boolean;
+    function AddToProject(const AFName,ARText:String; DeliChar:Char='|'):boolean;
     function AddToSections(const AFName,ARText:String; AInterfaceFlag:boolean):boolean;
     function ReplaceTag(const AFName,ATag,ARText:String; DeliChar:Char='|'):boolean;
     function InsertProjFormData(const AFName,AInfo:String):boolean;
@@ -31,20 +31,34 @@ uses SysUtils;
 { TInjectActions }
 
 function TInjectActions.AddToProject(const AFName,ARText: String;
-  inIncludeOpt: boolean): boolean;
-var LLIst:TStringList;
+  DeliChar:Char='|'): boolean;
+var LLIst,LReplList:TStringList;
     LS,LText,LRes:String;
-    i,j:integer;
+    i,j,k:integer;
     LFlag:boolean;
 begin
  Result:=false;
  LFlag:=false;
- if inIncludeOpt=false then
-    LText:=ARText+' in '''+ARText+'.pas'';'
- else LText:=ARText+';';
+ LText:=Trim(ARText);
+ if LText='' then exit;
+ if Ltext[Length(LText)]<>';' then
+    LText:=LText+';';
  LLIst:=TStringList.Create;
+ LReplList:=TStringList.Create;
  try
    LLIst.LoadFromFile(AFName);
+   LReplList.Delimiter:=DeliChar;
+   LReplList.StrictDelimiter:=True;
+   LReplList.DelimitedText:=LText;
+   if LReplList.Count=0 then exit;
+   i:=0;
+   while i<LReplList.Count do
+    begin
+      LS:=Trim(LReplList.Strings[i]);
+      if (LS='') or (LS=';') then
+         LReplList.Delete(i)
+      else Inc(i);
+    end;
    i:=0;
    while i<LList.Count-1 do
     begin
@@ -57,11 +71,20 @@ begin
       ///
       if LFlag then
         begin
-        j:=Pos(';',LList.Strings[i]);
+        j:=Pos(';',TrimRight(LList.Strings[i]));
         if j=Length(LList.Strings[i]) then
            begin
              LLIst.Strings[i]:=StringReplace(LList.Strings[i],';',',',[]);
-             LLIst.Insert(i+1,'  '+LText);
+             j:=0;  k:=i+1;
+             LS:=TrimRight(LReplList.Strings[LReplList.Count-1]);
+             if (LS='') or (LS[Length(LS)]<>';') then
+                 LReplList.Strings[LReplList.Count-1]:=LS+';';
+             while j<LReplList.Count do
+               begin
+                 LLIst.Insert(k,'  '+LReplList.Strings[j]);
+                 Inc(k);
+                 Inc(j);
+               end;
              Result:=true;
              break;
            end;
@@ -80,6 +103,7 @@ begin
    ///
   finally
    LList.Free;
+   LReplList.Free;
  end;
 end;
 
