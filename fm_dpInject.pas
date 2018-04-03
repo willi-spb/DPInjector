@@ -134,6 +134,9 @@ begin
                                      FieldByName('INTEXT').AsWideString,false);
               16: Lact.AddToProject(LDir+FieldByName('FILENAME').AsWideString,
                                      FieldByName('INTEXT').AsWideString); // true!
+              18: Lact.ModifyProjResource(LDir+FieldByName('FILENAME').AsWideString,
+                                      FieldByName('INTEXT').AsWideString,
+                                      FieldByName('TAGNAME').AsWideString);
               32: begin
                     LTagReplText:=FieldByName('INTEXT').AsWideString;
                     if chk_AddTagText.Checked=true then

@@ -16,11 +16,25 @@ type
     ///
     procedure Clearparams;
     ///
+    /// <summary>
+    ///    Add to DPR-file
+    /// </summary>
     function AddToProject(const AFName,ARText:String; DeliChar:Char='|'):boolean;
+    /// <summary>
+    ///   Add to Interface Implementation Section in aXX.pas file
+    /// </summary>
     function AddToSections(const AFName,ARText:String; AInterfaceFlag:boolean):boolean;
+    /// <summary>
+    ///    Replace Part in Pas-file --
+    /// </summary>
     function ReplaceTag(const AFName,ATag,ARText:String; DeliChar:Char='|'):boolean;
     function InsertProjFormData(const AFName,AInfo:String):boolean;
     function IsReplaced:boolean;
+    ///
+    //// <summary>
+     ///    add Resource to DProj aNameEqFilename format->  RESName=/Resource/Reffile.ccc
+     /// </summary>
+    function ModifyProjResource(const aResFileName,ANameEqFilename:String; const AResType:String='RCDATA'):boolean;
   end;
 
 implementation
@@ -260,6 +274,133 @@ begin
  Result:=(FSectFlag=true) or (FProjFlag=true) or (FTagFlag=true);
 end;
 
+{function TInjectActions.ModifyResource(const aResFileName, ANameEqFilename: String;
+  const AResType:String): boolean;
+var LResType,LResName,LResFile,LResStr,L_Line,L_name,L_File:string;
+    LList:TStringlist;
+    i,j,k,L_ReplIndex:integer;
+begin
+  Result:=false;
+  L_ReplIndex:=-1;
+  if Trim(AResType)='' then LResType:='RCDATA' else LResType:=Trim(AResType);
+  LResName:=''; LResFile:='';
+  i:=Pos('=',ANameEqFilename);
+  if (i>0) and (i<Length(ANameEqFilename)) then
+     begin
+       LResName:=Copy(ANameEqFilename,1,i-1);
+       LResFile:=Copy(ANameEqFilename,i+1,Length(ANameEqFilename)-i);
+       LResStr:=StringReplace(LResFile,pathDelim,'',[]); // remove first /
+       LResStr:=StringReplace(LResStr,pathDelim,'\\',[rfReplaceAll]);
+       LResStr:=LResName+' '+Uppercase(LResType)+' '+'"'+LResStr+'"';
+     end;
+  Assert((LResName<>'') and (LResFile<>''),'TInjectActions.ModifyResource (line=284) - not resource Name or File!');
+  LLIst:=TStringList.Create;
+  try
+   LList.LoadFromFile(aResFileName);
+   i:=0;
+   while i<LList.Count do
+     begin
+       L_Line:=Trim(LList.Strings[i]);
+       j:=Pos(' ',L_Line);
+       k:=Pos('"',L_Line);
+       if (j>1) and (k>1) and (k>j) then
+        begin
+          L_name:=Copy(L_Line,1,j-1);
+          L_File:=Copy(L_Line,k+1,Length(L_Line)-k-1);
+          if Uppercase(L_name)=Uppercase(LResName) then
+             begin
+               L_ReplIndex:=i;
+               break;
+             end;
+        end;
+       Inc(i);
+     end;
+   ///
+   if L_ReplIndex<0 then
+      LList.Add(LResStr)
+   else LList.Strings[L_ReplIndex]:=LResStr;
+   LList.SaveToFile(aResFileName);
+   Result:=true;
+   ///
+  finally
+    LList.Free;
+  end;
+end;
+}
+function TInjectActions.ModifyProjResource(const aResFileName, ANameEqFilename: String;
+  const AResType:String): boolean;
+var LResType,LResName,LResFile,LResStr,L_Line,L_name,L_File:string;
+    LList:TStringlist;
+    i,j,L_ReplIndex:integer;
+    LNewFlag:boolean;
+begin
+  Result:=false; LNewFlag:=true;
+  L_ReplIndex:=-1;
+  if Trim(AResType)='' then LResType:='RCDATA' else LResType:=Trim(AResType);
+  LResName:=''; LResFile:='';
+  i:=Pos('=',ANameEqFilename);
+  if (i>0) and (i<Length(ANameEqFilename)) then
+     begin
+       LResName:=Copy(ANameEqFilename,1,i-1);
+       LResFile:=Copy(ANameEqFilename,i+1,Length(ANameEqFilename)-i);
+       LResStr:=StringReplace(LResFile,pathDelim,'',[]); // remove first /
+       LResStr:=StringReplace(LResStr,pathDelim,'\',[rfReplaceAll]);
+       LResStr:='<RcItem Include="'+LResStr+'">';
+     end;
+  Assert((LResName<>'') and (LResFile<>''),'TInjectActions.ModifyResource - not resource Name or File!');
+  LLIst:=TStringList.Create;
+  try
+   LList.LoadFromFile(aResFileName);
+   i:=0; j:=0;
+   while i<LList.Count do
+     begin
+       L_Line:=Trim(LList.Strings[i]);
+       if Uppercase(L_Line)=Uppercase(LResStr) then
+             begin
+               L_ReplIndex:=i;
+               LNewFlag:=false;
+               break;
+             end;
+       Inc(i);
+     end;
+   if L_ReplIndex<0 then
+     begin
+       i:=0;
+       while i<LList.Count do
+        begin
+          j:=Pos('<BuildConfiguration',LList.Strings[i]);
+          if j>0 then
+            begin
+              L_ReplIndex:=i;
+              Break;
+            end;
+          Inc(i);
+        end;
+     end;
+   ///
+   if L_ReplIndex>0 then
+     begin
+      if LNewFlag=false then
+        begin
+          for j:=0 to 4 do
+            LList.Delete(L_ReplIndex);
+        end;
+      LList.Insert(L_ReplIndex,'</RcItem>');
+      LList.Insert(L_ReplIndex,'<ResourceId>'+LResName+'</ResourceId>');
+      LList.Insert(L_ReplIndex,'<ResourceType>'+UpperCase(LResType)+'</ResourceType>');
+      LList.Insert(L_ReplIndex,'<ContainerId>ResourceItem</ContainerId>');
+      LList.Insert(L_ReplIndex,LResStr);
+   ///
+      LList.SaveToFile(aResFileName);
+      Result:=true;
+     end;
+   ///
+  finally
+    LList.Free;
+  end;
+end;
+
+
 function TInjectActions.ReplaceTag(const AFName,ATag,ARText:String;DeliChar:Char='|'):boolean;
 var LLIst,LReplList:TStringList;
     LS,LSS,LSS2,Ltag,LText:String;
@@ -267,11 +408,18 @@ var LLIst,LReplList:TStringList;
     LFlag:boolean;
     L_SelfAddFlag:boolean;
     L_ReplDeleteCount:integer;
+    ///
+    /// TAG_COUNT=<L_RepltagCount> - if parameter not found - Replace One tag in List!  100000 - replace all
+    L_RepltagNum,L_RepltagCount:integer;
+    ///
 begin
  Result:=false;
  LFlag:=false;
  Ltag:=Atag;
  L_ReplDeleteCount:=0;
+ ///
+ L_RepltagNum:=0;
+ L_RepltagCount:=-1;
  ///
  LLIst:=TStringList.Create;
  LReplList:=TStringList.Create;
@@ -291,6 +439,12 @@ begin
    if i>=0 then
       begin
         TryStrToInt(LReplList.ValueFromIndex[i],L_ReplDeleteCount);
+        LReplList.Delete(i);
+      end;
+   i:=LReplList.IndexOfName('TAG_COUNT');
+   if i>=0 then
+      begin
+        TryStrToInt(LReplList.ValueFromIndex[i],L_RepltagCount);
         LReplList.Delete(i);
       end;
    ///
@@ -331,7 +485,9 @@ begin
               Dec(j);
               Result:=true;
            end;
-         break;
+         Inc(L_RepltagNum);
+         if (L_RepltagCount<=0) or (L_RepltagNum>=L_ReplTagCount) then
+             break;
         end;
       Inc(i);
     end;

@@ -53,7 +53,7 @@ object DPForm: TDPForm
         Left = 0
         Top = 50
         Width = 1058
-        Height = 353
+        Height = 342
         Align = alClient
         DataSource = DST
         TabOrder = 1
@@ -117,16 +117,16 @@ object DPForm: TDPForm
       end
       object pnlBottom: TPanel
         Left = 0
-        Top = 403
+        Top = 392
         Width = 1058
-        Height = 138
+        Height = 149
         Align = alBottom
         Caption = 'pnlBottom'
         ShowCaption = False
         TabOrder = 2
         DesignSize = (
           1058
-          138)
+          149)
         object btnAPP: TSpeedButton
           Left = 773
           Top = 4
@@ -141,7 +141,7 @@ object DPForm: TDPForm
           Left = 812
           Top = 1
           Width = 245
-          Height = 136
+          Height = 147
           Align = alRight
           ScrollBars = ssVertical
           Strings.Strings = (
@@ -149,6 +149,7 @@ object DPForm: TDPForm
             '4=add to Interface uses'
             '8=add to Implementation uses'
             '16=add to DPR (in)'
+            '18=add Resorce to DProj'
             '32=tag (from TagName) replace')
           TabOrder = 0
           TitleCaptions.Strings = (
@@ -163,6 +164,7 @@ object DPForm: TDPForm
             18
             18
             18
+            18
             18)
         end
         object MemoIn: TMemo
@@ -170,7 +172,7 @@ object DPForm: TDPForm
           Left = 4
           Top = 4
           Width = 764
-          Height = 130
+          Height = 141
           Margins.Right = 44
           Align = alClient
           ScrollBars = ssVertical
@@ -232,10 +234,6 @@ object DPForm: TDPForm
     object tsComment: TTabSheet
       Caption = 'Info and Comment'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object mmoComment: TMemo
         Left = 0
         Top = 0
@@ -404,7 +402,7 @@ object DPForm: TDPForm
     Left = 392
     Top = 96
     Bitmap = {
-      494C010103001400640020002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010103001400700020002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000800000002000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -956,7 +954,7 @@ object DPForm: TDPForm
           end
           item
             Action = actRenameGroup
-            Caption = 'A&pply'
+            Caption = 'A&pply '
             ImageIndex = 2
             ShowCaption = False
           end>
@@ -996,7 +994,7 @@ object DPForm: TDPForm
           end
           item
             Action = actRenameGroup
-            Caption = 'A&pply'
+            Caption = 'A&pply '
             ImageIndex = 2
             ShowCaption = False
           end>
@@ -1029,8 +1027,8 @@ object DPForm: TDPForm
       OnUpdate = actRenameGroupUpdate
     end
     object actRenameGroup: TAction
-      Caption = 'Apply'
-      Hint = 'Replace Items'
+      Caption = 'Apply '
+      Hint = 'Apply Items'
       ImageIndex = 2
       OnExecute = actRenameGroupExecute
       OnUpdate = actRenameGroupUpdate
