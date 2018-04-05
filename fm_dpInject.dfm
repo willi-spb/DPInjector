@@ -229,6 +229,17 @@ object DPForm: TDPForm
           TabOrder = 2
           Text = '///dpAutoCode'
         end
+        object chk_All: TCheckBox
+          Left = 256
+          Top = 8
+          Width = 97
+          Height = 17
+          Caption = 'Active All'
+          Checked = True
+          State = cbChecked
+          TabOrder = 3
+          OnClick = chk_AllClick
+        end
       end
     end
     object tsComment: TTabSheet
@@ -402,7 +413,7 @@ object DPForm: TDPForm
     Left = 392
     Top = 96
     Bitmap = {
-      494C010103001400700020002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010103001400780020002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000800000002000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

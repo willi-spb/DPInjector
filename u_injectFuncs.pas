@@ -404,7 +404,7 @@ end;
 function TInjectActions.ReplaceTag(const AFName,ATag,ARText:String;DeliChar:Char='|'):boolean;
 var LLIst,LReplList:TStringList;
     LS,LSS,LSS2,Ltag,LText:String;
-    i,j,k:integer;
+    i,j,k,iIns:integer;
     LFlag:boolean;
     L_SelfAddFlag:boolean;
     L_ReplDeleteCount:integer;
@@ -415,7 +415,7 @@ var LLIst,LReplList:TStringList;
 begin
  Result:=false;
  LFlag:=false;
- Ltag:=Atag;
+ Ltag:=Trim(Atag);
  L_ReplDeleteCount:=0;
  ///
  L_RepltagNum:=0;
@@ -427,6 +427,11 @@ begin
    LReplList.Delimiter:=DeliChar;
    LReplList.StrictDelimiter:=True;
    LReplList.DelimitedText:=ARText;
+   i:=LReplList.IndexOfName('LINE');
+   if i>=0 then
+    begin
+      LReplList.Delete(i);
+    end;
    ///  Add Self Tag information  - replace SELF to aTag String
    i:=LReplList.IndexOf('SELF');
    if i>=0 then
@@ -478,10 +483,14 @@ begin
                  LLIst.Delete(i);
            end;
           ///
+          if (L_SelfAddFlag) and (i<LList.Count-2) then
+            iIns:=i
+          else iIns:=i+1;
+          ///
           j:=LReplList.Count-1;
           while J>=0 do
            begin
-              LList.Insert(i,LReplList.Strings[j]);
+              LList.Insert(iIns,LReplList.Strings[j]);
               Dec(j);
               Result:=true;
            end;

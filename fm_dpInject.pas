@@ -46,6 +46,7 @@ type
     tsDirect: TTabSheet;
     tsComment: TTabSheet;
     mmoComment: TMemo;
+    chk_All: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure FileSaveAs1Accept(Sender: TObject);
     procedure FileOpen1Accept(Sender: TObject);
@@ -59,6 +60,7 @@ type
     procedure DBGrid1ColExit(Sender: TObject);
     procedure DBGrid1KeyPress(Sender: TObject; var Key: Char);
     procedure dbchkACTIVEClick(Sender: TObject);
+    procedure chk_AllClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -163,6 +165,28 @@ end;
 procedure TDPForm.actRenameGroupUpdate(Sender: TObject);
 begin
   TAction(Sender).Enabled:=(FDMemT.Active=true) and (FDMemT.RecordCount>0);
+end;
+
+procedure TDPForm.chk_AllClick(Sender: TObject);
+var LFlag:boolean;
+begin
+  LFlag:=(chk_All.Checked=true);
+  FDMemT.DisableControls;
+  try
+    FDMemT.First;
+    while Not(FDMemT.Eof) do
+      begin
+       if FDMemT.FieldByName('RCODE').AsInteger>3 then
+        begin
+          FDMemT.Edit;
+          FDMemT.FieldByName('ACTIVE').AsBoolean:=LFlag;
+          FDMemT.POst;
+        end;
+       FDMemT.Next;
+      end;
+  finally
+    FDMemT.EnableControls;
+  end;
 end;
 
 procedure TDPForm.dbchkACTIVEClick(Sender: TObject);
